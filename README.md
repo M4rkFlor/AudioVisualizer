@@ -13,3 +13,5 @@ I learned about the DFT and FFT to make this.
 **Left** and **Right** Arrows to change offset  
 ## Download
 Download all the items in Release and put them in a folder and you should be able to run it as long as you're on windows.
+## Using your own song
+Only compatible with songs that are monochannel 41000Hz and PWM in the file format WAV, OGG/Vorbis and FLAC.
