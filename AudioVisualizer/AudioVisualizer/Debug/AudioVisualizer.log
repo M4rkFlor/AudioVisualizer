@@ -1,0 +1,7 @@
+﻿  main.cpp
+c:\users\marco\source\repos\audiovisualizer\audiovisualizer\main.cpp(213): warning C4244: '+=': conversion from 'sf::Uint64' to 'long', possible loss of data
+c:\users\marco\source\repos\audiovisualizer\audiovisualizer\main.cpp(227): warning C4244: '+=': conversion from 'sf::Uint64' to 'long', possible loss of data
+c:\users\marco\source\repos\audiovisualizer\audiovisualizer\main.cpp(230): warning C4018: '<': signed/unsigned mismatch
+c:\users\marco\source\repos\audiovisualizer\audiovisualizer\main.cpp(232): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\marco\source\repos\audiovisualizer\audiovisualizer\main.cpp(303): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  AudioVisualizer.vcxproj -> C:\Users\Marco\source\repos\AudioVisualizer\Debug\AudioVisualizer.exe
