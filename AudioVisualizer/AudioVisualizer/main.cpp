@@ -19,16 +19,16 @@ const double PI = 3.141592653589793238460;
 
 CArray entireSong;
 CArray currentSample;
-long last = 0; //keeps track of the last element in entireSong
+sf::Uint64 last = 0; //keeps track of the last element in entireSong
 int fftProgress = 0; // tracks progress of fft on samples
 float songDuration = 0;
 sf::Uint64 totalSamples;
-int sampleRate=0;
+int sampleRate = 0;
 const short sampleDivisor = 128;//a journal said 250 was good though , 82 what fraction of a second should be analyzed//https://www.mathsisfun.com/numbers/factors-all-tool.html
-const int sampleRateConst = 41000 / sampleDivisor;//SFML only supports 41,000hz
+const int sampleRateConst = 44100 / sampleDivisor;//SFML only supports 41,000hz, If this number is not correct then The audio visualizer will be out of sync.
 int mytime = 0;//used as an index to choose which set of data to show based on time
 int offset = 0;
-enum plotStyles { points, lines, bars};
+enum plotStyles { points, lines, bars };
 plotStyles plottingStyle = bars;
 bool plotLog = false;
 bool ploted = false;
@@ -57,10 +57,10 @@ void Draw() {
 			for (int i = 0; i < sampleRateConst; i++)
 			{
 				/*get min max
-				if (fftMatrixData[mytime][i] > max) 
-					max = fftMatrixData[mytime][i];
+				if (fftMatrixData[mytime][i] > max)
+				max = fftMatrixData[mytime][i];
 				if (fftMatrixData[mytime][i] < min)
-					min = fftMatrixData[mytime][i];
+				min = fftMatrixData[mytime][i];
 				*/
 				if (plotLog)
 				{
@@ -90,7 +90,7 @@ void Draw() {
 					{
 						glVertex2f(((float)((float)(i * 41000) / sampleRateConst) / 41000) * 2 - 1, 0);//Bottom Right
 						glVertex2f(((float)((float)(i * 41000) / sampleRateConst) / 41000) * 2 - 1, (float)((float)prevHeight + fftMatrixData[mytime][i] / 2) / fftMatrixDataMaxAmplitude);//Top Right
-						glVertex2f(((float)((float)((i-1) * 41000) / sampleRateConst) / 41000) * 2 - 1, (float)((float)prevHeight + fftMatrixData[mytime][i] / 2) / fftMatrixDataMaxAmplitude);//Top Left
+						glVertex2f(((float)((float)((i - 1) * 41000) / sampleRateConst) / 41000) * 2 - 1, (float)((float)prevHeight + fftMatrixData[mytime][i] / 2) / fftMatrixDataMaxAmplitude);//Top Left
 						glEnd();//close Bar
 					}
 				}
@@ -108,11 +108,11 @@ void Draw() {
 		{
 			/*
 			if (fftMatrixData[mytime][i] > max) {
-				max = fftMatrixData[mytime][i];
+			max = fftMatrixData[mytime][i];
 			}
 			if (fftMatrixData[mytime][i] < min)
 			{
-				min = fftMatrixData[mytime][i];
+			min = fftMatrixData[mytime][i];
 			}
 			*/
 			if (plotLog)
@@ -153,12 +153,12 @@ void fft(CArray &x)
 		x[k] = even[k] + t;
 		x[k + N / 2] = even[k] - t;
 	}
-	if(N>fftProgress)
+	if (N>fftProgress)
 	{
 		fftProgress = N;
-		cout << "Progress: " << (short)(((float)N / (float)totalSamples)*50.0f)+50.f << "%" << '\r' << flush;
+		cout << "Progress: " << (short)(((float)N / (float)totalSamples)*50.0f) + 50.f << "%" << '\r' << flush;
 	}
-	
+
 }
 
 int main() {
@@ -180,7 +180,7 @@ int main() {
 		std::cout << "Glew failed to Initialize" << glewGetErrorString(result) << std::endl;
 	}
 #pragma endregion WindowGLEWSetup 
-	
+
 	sf::InputSoundFile file;
 	string filenameF = "Song.ogg";//144Hz.wav 400Hz.wav 500Hz.wav 10000Hz.wav Song.ogg
 	if (!file.openFromFile(filenameF))
@@ -196,7 +196,7 @@ int main() {
 	std::cout << "sample count: " << totalSamples << std::endl;
 
 	sf::Int16 samples[sampleRateConst];
-	
+
 	//fftMatrixData.resize(totalSamples / 44100);//dosent matter if odd || this causes eeror cause push back places in wrong location
 	vector<long> fftMatrixRow(sampleRateConst, 0);
 	//entireSong.resize(totalSamples);//valarray cant change size so setting the total length to 0 is good
@@ -205,7 +205,7 @@ int main() {
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
 	//bool first = true;
-	long howmanysamplesread = 0;
+	sf::Uint64 howmanysamplesread = 0;
 	do
 	{
 		//first = true;
@@ -221,13 +221,13 @@ int main() {
 			else {
 				currentSample[i] = 0;
 			}
-			
+
 			//entireSong.push_back(samples[i]);
 		}
 		last += count;
 		fft(currentSample);
 		int amplitude = 0;
-		for (int i = 0; i < currentSample.size(); i++)
+		for (unsigned int i = 0; i < currentSample.size(); i++)
 		{
 			amplitude = abs(currentSample[i]);
 			fftMatrixRow[i] = amplitude;
@@ -243,16 +243,16 @@ int main() {
 		sound.setBuffer(buffer);
 		sound.play();
 		while (sound.getStatus() == sf::SoundSource::Status::Playing) {
-			if (first == true)
-			{
-				for (int i = 0; i < 44100; i++) {
-					entireSong.push_back(samples[i]);
-				}
-				first = false;
-			}
+		if (first == true)
+		{
+		for (int i = 0; i < 44100; i++) {
+		entireSong.push_back(samples[i]);
+		}
+		first = false;
+		}
 		}
 		*/
-		
+
 	} while (count > 0);
 	/* load and play buffer
 	buffer.loadFromSamples(&entireSong[0], entireSong.size(), 2, 44100);
@@ -264,15 +264,15 @@ int main() {
 	sf::Music music;
 	if (!music.openFromFile(filenameF))
 		std::cout << "errr";
-	
+
 	//fft(entireSong);
-	
-	
-	
-	
+
+
+
+
 	glClearColor(0, 0, 0, 1);//RGB bLACK background
-	
-	
+
+
 	music.play();
 	sf::Clock clock; // starts the clock
 	sf::Time elapsedTime = clock.getElapsedTime();
@@ -343,10 +343,10 @@ int main() {
 		}
 
 		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {  }
-	
-		
+
+
 		//Update();
-		
+
 		elapsedTime = clock.getElapsedTime();
 		mytime = (int)(elapsedTime.asSeconds() * sampleDivisor) + offset;
 		Draw();

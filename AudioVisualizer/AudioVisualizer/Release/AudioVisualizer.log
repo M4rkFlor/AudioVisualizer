@@ -1,12 +1,9 @@
 ﻿  main.cpp
-main.cpp(213): warning C4244: '+=': conversion from 'sf::Uint64' to 'long', possible loss of data
-main.cpp(227): warning C4244: '+=': conversion from 'sf::Uint64' to 'long', possible loss of data
-main.cpp(230): warning C4018: '<': signed/unsigned mismatch
 main.cpp(232): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
 main.cpp(303): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Generating code
-  1 of 253 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+  244 of 253 functions (96.4%) were compiled, the rest were copied from previous compilation.
+    6 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  AudioVisualizer.vcxproj -> C:\Users\Marco\source\repos\AudioVisualizer\Release\AudioVisualizer.exe
+  AudioVisualizer.vcxproj -> C:\Users\Marco\Documents\GitHub\AudioVisualizer\AudioVisualizer\Release\AudioVisualizer.exe
